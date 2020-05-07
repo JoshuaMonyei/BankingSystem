@@ -80,4 +80,31 @@ def home_page
   end
 end
 
+def customer_options
+  print('If you have an account with us please enter your account number: ')
+  customer_acct = gets.chomp
+  File.open('customer.txt', 'r') do |file|
+    if file.read.include? customer_acct
+      puts('Account number is Valid')
+      print('Create an account pin: ')
+      acct_pin = gets.chomp
+      # checking if only numbers where entered as input and the characters are between 4 - 6
+      if acct_pin.to_i.to_s == acct_pin && acct_pin.length >= 4 && acct_pin.length <= 6
+        puts(acct_pin)
+        File.open('customer_login.txt', 'a') do |file|
+          file.write('Account number: ' + customer_acct + ' ')
+          file.write('Account Pin: ' + acct_pin + "\n")
+        end
+
+      else
+        puts('Pin Should be between 4-6 digits')
+        customer_options
+      end
+    else
+      puts('Invalid account number')
+      customer_options
+    end
+  end
+end
+
 root
