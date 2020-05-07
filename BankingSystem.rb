@@ -1,5 +1,8 @@
 def root
-   puts("what would you like to do? Staff login or Close App")
+   puts("what would you like to do? 
+      1. Staff login
+      2. Customer login
+      3.Close App: ")
    login_page = gets.chomp().downcase
    if login_page == "staff login"
       puts("Please input your username: ")
@@ -17,6 +20,8 @@ def root
       end
    elsif login_page == "close app"
       exit
+   elsif login_page == "customer login"
+      puts("Create an account pin: ")
    else
       puts("Invalid entry")
       #recalling the root method after an invalid entry
@@ -77,3 +82,4 @@ end
 
 root
 home_page
+
