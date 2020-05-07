@@ -51,22 +51,24 @@ def home_page
     puts('Your account number is: ' + acct_num)
     # saving variables in the customer.txt file
     File.open('customer.txt', 'a') do |file|
-      file.write('Account name: ' + acct_name + '\n')
-      file.write('Account Balance: ' + opening_bal + '$\n')
-      file.write('Account type: ' + acct_type + '\n')
-      file.write('Account email: ' + acct_email + '\n')
-      file.write('Account number: ' + acct_num + '\n')
+      file.write('Account name: ' + acct_name + ' ')
+      file.write('Account Balance: ' + opening_bal + ' ')
+      file.write('Account type: ' + acct_type + ' ')
+      file.write('Account email: ' + acct_email + ' ')
+      file.write('Account number: ' + acct_num + "\n")
     end
     home_page
   elsif staff_options == 'check account details'
     print("Please what's your account number: ")
     check_acct = gets.chomp
     # reading out saved file from customer.txt file
-    File.open('customer.txt', 'r') do |file|
-      puts file.read
+    search = open('customer.txt', 'r')
+    for lines in search
+      if lines.include? check_acct
+        print lines
+      end
     end
     home_page
-
   elsif staff_options == 'logout'
     puts('Logout successful')
     # recalling the root method
