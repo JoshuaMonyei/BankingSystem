@@ -50,7 +50,7 @@ def home_page
       file.write('Account Balance: ' + opening_bal + '$ ')
       file.write('Account type: ' + acct_type + ' ')
       file.write('Account email: ' + acct_email + ' ')
-      file.write('Account number: ' + acct_num + '\n')
+      file.write('Account number: ' + acct_num + "\n")
     end
     home_page
   elsif staff_options == 'check account details'
