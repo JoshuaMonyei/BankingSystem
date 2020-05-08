@@ -20,7 +20,19 @@ def root
       end
     end
   elsif login_page == 'customer login'
-    customer_options
+    puts('What would you like to do:
+      1. Create an account pin
+      2. Login')
+    options = gets.chomp.downcase
+    if options == 'create an account pin'
+      create_customer_pin
+    elsif options == 'login'
+  
+    else
+      puts('Invalid entry')
+      root
+    end
+  
   elsif login_page == 'close app'
     exit
   else
@@ -80,7 +92,7 @@ def home_page
   end
 end
 
-def customer_options
+def create_customer_pin
   print('If you have an account with us please enter your account number: ')
   customer_acct = gets.chomp
   File.open('customer.txt', 'r') do |file|
@@ -88,7 +100,7 @@ def customer_options
       puts('Account number is Valid')
       print('Create an account pin: ')
       acct_pin = gets.chomp
-      # checking if only numbers where entered as input and the characters are between 4 - 6
+      # checking only numbers were entered as input and the characters are between 4 - 6
       if acct_pin.to_i.to_s == acct_pin && acct_pin.length >= 4 && acct_pin.length <= 6
         puts(acct_pin)
         File.open('customer_login.txt', 'a') do |file|
@@ -98,11 +110,11 @@ def customer_options
 
       else
         puts('Pin Should be between 4-6 digits')
-        customer_options
+        create_customer_pin
       end
     else
       puts('Invalid account number')
-      customer_options
+      create_customer_pin
     end
   end
 end
