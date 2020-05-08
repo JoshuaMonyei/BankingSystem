@@ -107,6 +107,7 @@ def create_customer_pin
           file.write('Account number: ' + customer_acct + ' ')
           file.write('Account Pin: ' + acct_pin + "\n")
         end
+        root
 
       else
         puts('Pin Should be between 4-6 digits')
