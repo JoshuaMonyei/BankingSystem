@@ -1,4 +1,5 @@
 def root
+require 'json'
   puts("what would you like to do?
       1. Staff login
       2. Customer login
@@ -10,15 +11,18 @@ def root
     puts('Please input your password: ')
     password = gets.chomp
     # opening staff.txt file to verify user input
-    File.open('staff.txt', 'r') do |file|
-      if file.read.match(username && password)
-        puts('Login successful')
-        home_page
-      else
-        puts('Incorrect username or password')
-        root
-      end
-    end
+    file = File.open('staff.txt', 'r')
+    staff_details = JSON.load(file)
+    if username == (staff_details['Staff1']['username']) && password == (
+      staff_details['Staff1']['password']) || \
+      username == (staff_details['Staff2']['username']) && password == (
+      staff_details['Staff2']['password'])
+      puts('Login Successful')
+      home_page
+    else
+      puts('Incorrect username or password')
+      root
+    end 
   elsif login_page == 'customer login'
     puts('What would you like to do:
       1. Create an account pin

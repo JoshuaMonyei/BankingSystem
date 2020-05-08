@@ -1,11 +1,1 @@
-User1;
-kyloren
-12345 
-Email: monyeijosh01@gmail.com
-Fullname: Joshua Monyei
-User2;
-xyluz
-54321
-Email: startng@gmail.com
-Fullname: Xylus HNG
-   
+{"Staff1": {"username": "kyloren", "password": "12345", "Email": "monyeijosh01@gmail.com", "Fullname": "Joshua Monyei"}, "Staff2": {"username": "xyluz", "password": "54321", "Email": "startng@gmail.com", "Fullname": "Xyluz Ban"}}
