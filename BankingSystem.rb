@@ -1,11 +1,11 @@
 def root
-require 'json'
-  puts("what would you like to do?
+  require 'json'
+  puts("what would you like to do? Enter 1 or 2 to choose
       1. Staff login
       2. Customer login
       3. Close App: ")
-  login_page = gets.chomp.downcase
-  if login_page == 'staff login'
+  login_page = gets.chomp
+  if login_page == '1'
     puts('Please input your username: ')
     username = gets.chomp
     puts('Please input your password: ')
@@ -14,30 +14,31 @@ require 'json'
     file = File.open('staff.txt', 'r')
     staff_details = JSON.load(file)
     if username == (staff_details['Staff1']['username']) && password == (
-      staff_details['Staff1']['password']) || \
-      username == (staff_details['Staff2']['username']) && password == (
-      staff_details['Staff2']['password'])
+       staff_details['Staff1']['password']) || \
+       username == (staff_details['Staff2']['username']) && password == (
+       staff_details['Staff2']['password'])
       puts('Login Successful')
-      home_page
+      staff_home_page
     else
       puts('Incorrect username or password')
       root
-    end 
-  elsif login_page == 'customer login'
-    puts('What would you like to do:
+    end
+
+  elsif login_page == '2'
+    puts('What would you like to do: Enter 1 or 2 to choose
       1. Create an account pin
       2. Login')
-    options = gets.chomp.downcase
-    if options == 'create an account pin'
+    options = gets.chomp
+    if options == '1'
       create_customer_pin
-    elsif options == 'login'
-  
+    elsif options == '2'
+
     else
       puts('Invalid entry')
       root
     end
-  
-  elsif login_page == 'close app'
+
+  elsif login_page == '3'
     exit
   else
     puts('Invalid entry')
@@ -47,13 +48,15 @@ require 'json'
 end
 
 # creating a method for staff options after a successful login
-def home_page
-  puts("What would you like to do?
+def staff_home_page
+  require 'json'
+
+  puts("What would you like to do? Enter 1, 2 or 3 to choose
       1. Create new bank account
       2. Check Account Details
       3. Logout")
-  staff_options = gets.chomp.downcase
-  if staff_options == 'create new bank account'
+  staff_options = gets.chomp
+  if staff_options == '1'
     print('Account name: ')
     acct_name = gets.chomp
     print('Opening Balance: ')
@@ -65,27 +68,49 @@ def home_page
     # generating random number to use as acct number
     acct_num = 10.times.map { rand(0..9) }.join.to_s
     puts('Your account number is: ' + acct_num)
-    # saving variables in the customer.txt file
-    File.open('customer.txt', 'a') do |file|
-      file.write('Account name: ' + acct_name + ' ')
-      file.write('Account Balance: ' + opening_bal + ' ')
-      file.write('Account type: ' + acct_type + ' ')
-      file.write('Account email: ' + acct_email + ' ')
-      file.write('Account number: ' + acct_num + "\n")
-    end
-    home_page
-  elsif staff_options == 'check account details'
-    print("Please what's your account number: ")
-    check_acct = gets.chomp
-    # reading out saved file from customer.txt file
-    search = open('customer.txt', 'r')
-    for lines in search
-      if lines.include? check_acct
-        print lines
+    # creating dictionaries to save in the customer.txt file
+    overall_data = {}
+    banking_details = {
+      'Account name': acct_name, 'Opening Balance': opening_bal + '$',
+      'Account type': acct_type, 'Account email': acct_email
+    }
+    overall_data[acct_num] = banking_details
+    # check if customer.txt is empty by doing this, the essence of this is to enable the smooth reading of text from the file.
+    if File.zero?('customer.txt')
+      File.open('customer.txt', 'w') do |f|
+        JSON.dump(overall_data, f)
+      end
+    else
+      # i.e. if the customer.txt is not empty
+      File.open('customer.txt') do |f_obj|
+        overall_data = JSON.load(f_obj)
+        # Then append the present user details
+        overall_data[acct_num] = banking_details
+      end
+      # Then open the customer file in write mode and dump the overall_data to it
+      File.open('customer.txt', 'w') do |fil|
+        JSON.dump(overall_data, fil)
       end
     end
-    home_page
-  elsif staff_options == 'logout'
+    staff_home_page
+  elsif staff_options == '2'
+    require 'json'
+    print('Enter account number to check: ')
+    check_acct = gets.chomp
+    # reading out saved file from customer.txt file
+    f_obj = File.open('customer.txt')
+    data = JSON.load(f_obj)
+    if data.key?(check_acct)
+      puts("\n\tAccount Found ! See details below;")
+      data[check_acct].each do |key, value|
+        puts key.to_s + ' : ' + value
+      end
+      staff_home_page
+    else
+      print('Account does not exist! You can register a new one if you wish. Choose by entering 1 below')
+    end
+    staff_home_page
+  elsif staff_options == '3'
     puts('Logout successful')
     # recalling the root method
     root
