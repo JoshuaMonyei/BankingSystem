@@ -1,6 +1,6 @@
 def root
   require 'json'
-  puts("what would you like to do? Enter 1 or 2 to choose
+  puts("what would you like to do? Enter 1, 2 or 3 to choose
       1. Staff login
       2. Customer login
       3. Close App: ")
@@ -83,6 +83,7 @@ def staff_home_page
       end
     end
     staff_home_page
+
   elsif staff_options == '2'
     require 'json'
     print('Enter account number to check: ')
@@ -100,10 +101,12 @@ def staff_home_page
       print('Account does not exist! You can register a new one if you wish. Choose by entering 1 below')
     end
     staff_home_page
+ 
   elsif staff_options == '3'
     puts('Logout successful')
     # recalling the root method
     root
+ 
   else
     puts('Inavlid entry')
     # recalling the home page after an invalid entry among staff options
@@ -119,10 +122,13 @@ def customer_options
   options = gets.chomp
   if options == '1'
     create_customer_pin
+    
   elsif options == '2'
     customer_login
+
   elsif options == '3'
     root
+  
   else
     puts('Invalid entry')
     customer_options
@@ -131,6 +137,7 @@ end
 
 def create_customer_pin
   require 'json'
+  
   print('If you have an account with us please enter your account number: ')
   customer_acct = gets.chomp
   # Checking to see customer input exist in the data base
@@ -168,6 +175,7 @@ def create_customer_pin
       puts('Pin Should be between 4-6 digits')
       create_customer_pin
     end
+    
   else
     puts('Invalid account number')
     create_customer_pin
@@ -176,6 +184,7 @@ end
 
 def customer_login
   require 'json'
+  
   print('Please enter your Account Number: ')
   customer_acct = gets.chomp
   print('Enter Account Pin: ')
@@ -214,6 +223,7 @@ def customer_login
      else
       puts('Only numbers are allowed')
      end
+      
     elsif customer_login_options == '3'
      print('How much are you withdrawing: ')
      withdrawal = gets.chomp
@@ -233,11 +243,11 @@ def customer_login
      puts('Logout Successful')
      login = false
      root
+      
     else
      puts('Invalid entry;')
  
     end
- 
     
    end
   else
