@@ -1,4 +1,4 @@
-# snbank
+# snbank -v2
 A version of the Banking System that creates a new functionality for customers.
 Enabling them to do the following;
 1. Create a pin associated with their account.
